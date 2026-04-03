@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,3 +135,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+SSL_STORE_ID = os.getenv("SSL_STORE_ID") or os.getenv("STORE_ID")
+SSL_STORE_PASSWORD = os.getenv("SSL_STORE_PASSWORD") or os.getenv("STORE_PASSWORD")
+SSL_SANDBOX = os.getenv("SSL_SANDBOX", "True").lower() in ("1", "true", "yes")
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://sandbox.sslcommerz.com",
+    "https://securepay.sslcommerz.com",
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",  # your local dev server
+    "http://localhost:8000",  # local alias
+    "https://sandbox.sslcommerz.com",  # sandbox for testing
+    "https://securepay.sslcommerz.com",  # production gateway
+]

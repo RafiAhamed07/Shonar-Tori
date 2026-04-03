@@ -1,7 +1,7 @@
 from django.db import models
 from base.models import BaseModel
 from django.utils.text import slugify
-
+from django.contrib.auth.models import User
 
 
 class Category(BaseModel):
@@ -62,3 +62,25 @@ class Product(BaseModel):
 class ProductImage(BaseModel):
     product = models.ForeignKey(Product , on_delete=models.CASCADE , related_name="product_images")
     image =  models.ImageField(upload_to="product")
+
+
+class Cart(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Cart - {self.user.email}"
+    
+
+
+class CartItem(BaseModel):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_items")
+    product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    class Meta:
+        unique_together = ['cart', 'product']  # 🔥 prevents duplicates
+
+    def get_total_price(self):
+        return self.product.price * self.quantity
+
+    def __str__(self):
+        return f"{self.product.product_name} ({self.quantity})"

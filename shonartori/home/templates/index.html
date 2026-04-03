@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}All Products - Shonartori{% endblock %}
 
 {% block content %}
 
@@ -17,7 +18,7 @@
                 <h5>{{ product.product_name }}</h5>
                 <p>৳ {{ product.price }}</p>
 
-                <a href="/product/{{ product.slug }}/" class="btn btn-primary">
+                <a href="{% url 'get_product' product.slug %}" class="btn btn-primary">
                     View Product
                 </a>
             </div>

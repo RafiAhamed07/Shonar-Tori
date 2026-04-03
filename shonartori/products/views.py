@@ -26,6 +26,7 @@ def add_to_cart(request, uid):
         messages.error(request, 'Product not found')
         return redirect('get_product')
     except Exception as e:
+        
         print(f"Error adding to cart: {e}")
         messages.error(request, 'An error occurred while adding to cart')
         return redirect(request.META.get('HTTP_REFERER', 'get_product'))

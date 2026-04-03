@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shonartori</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+
+        <a class="navbar-brand" href="/">Shonartori</a>
+
+        <div class="d-flex align-items-center">
+
+            {% if request.user.is_authenticated %}
+
+                <!-- USER DROPDOWN -->
+                <div class="dropdown">
+                    <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                       href="#"
+                       data-bs-toggle="dropdown">
+
+                        <!-- PROFILE IMAGE -->
+                        {% if request.user.profile.profile_image %}
+                            <img src="{{ request.user.profile.profile_image.url }}"
+                                 class="rounded-circle"
+                                 width="40"
+                                 height="40"
+                                 style="object-fit: cover;">
+                        {% else %}
+                            <img src="/media/profile/default.png"
+                                 class="rounded-circle"
+                                 width="40"
+                                 height="40">
+                        {% endif %}
+
+                        <span class="ms-2">
+                            {{ request.user.first_name|default:request.user.username }}
+                        </span>
+                    </a>
+
+                    <!-- DROPDOWN MENU -->
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="#">My Orders</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="/buyer/logout/">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            {% else %}
+
+                <!-- NOT LOGGED IN -->
+                <a href="/buyer/login/" class="btn btn-outline-light me-2">Login</a>
+                <a href="/buyer/register/" class="btn btn-warning">Register</a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- BOOTSTRAP JS (IMPORTANT for dropdown) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">All Products</h2>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+
+            {% if product.product_images.first %}
+                <img src="{{ product.product_images.first.image.url }}" class="card-img-top">
+            {% endif %}
+
+            <div class="card-body">
+                <h5>{{ product.product_name }}</h5>
+                <p>৳ {{ product.price }}</p>
+
+                <a href="/product/{{ product.slug }}/" class="btn btn-primary">
+                    View Product
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

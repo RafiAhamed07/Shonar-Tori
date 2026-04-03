@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <div class="card p-3">
+            <div class="row">
+
+                <!-- PRODUCT IMAGES -->
+                <aside class="col-md-6">
+                    <article class="gallery-wrap">
+
+                        <!-- MAIN IMAGE -->
+                        <div class="img-big-wrap mb-3 text-center">
+                            {% if product.product_images.first %}
+                                <img id="mainImage"
+                                     src="{{ product.product_images.first.image.url }}"
+                                     class="img-fluid rounded"
+                                     style="max-height:400px;">
+                            {% else %}
+                                <img id="mainImage"
+                                     src="https://via.placeholder.com/400"
+                                     class="img-fluid rounded">
+                            {% endif %}
+                        </div>
+
+                        <!-- THUMBNAILS -->
+                        <div class="thumbs-wrap d-flex gap-2 flex-wrap justify-content-center">
+                            {% for image in product.product_images.all %}
+                                <img src="{{ image.image.url }}"
+                                     class="img-thumbnail thumb-img"
+                                     style="height:70px; cursor:pointer;"
+                                     onclick="changeImage(this)">
+                            {% endfor %}
+                        </div>
+
+                    </article>
+                </aside>
+
+                <!-- PRODUCT DETAILS -->
+                <main class="col-md-6">
+                    <article class="content-body">
+
+                        <h2 class="title">{{ product.product_name }}</h2>
+
+                        <!-- PRICE -->
+                        <div class="mb-3">
+                            <h4 class="text-success">৳ {{ product.price }}</h4>
+                        </div>
+
+                        <!-- DESCRIPTION -->
+                        <p>{{ product.product_description }}</p>
+
+                        <hr>
+
+                        <!-- COLOR VARIANTS -->
+                        {% if product.color_variant.count %}
+                        <div class="mb-3">
+                            <label><b>Available Colors:</b></label><br>
+                            {% for color in product.color_variant.all %}
+                                <span class="badge bg-dark">{{ color.color_name }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <!-- SIZE VARIANTS -->
+                        {% if product.size_variant.count %}
+                        <div class="mb-3">
+                            <label><b>Select Size:</b></label><br>
+
+                            {% for size in product.size_variant.all %}
+                                <label class="me-3">
+                                    <input type="radio" name="select_size" value="{{ size.uid }}">
+                                    {{ size.size_name }}
+                                </label>
+                            {% endfor %}
+
+                        </div>
+                        {% endif %}
+
+                        <!-- QUANTITY -->
+                        <div class="form-group mb-3" style="width:120px;">
+                            <label>Quantity</label>
+                            <input type="number" value="1" min="1" class="form-control">
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="mt-4">
+                            <a href="#" class="btn btn-primary me-2">Buy Now</a>
+
+                            <a href="/product/add-to-cart/{{ product.uid }}/"
+                               class="btn btn-outline-primary">
+                                Add to Cart 🛒
+                            </a>
+                        </div>
+
+                    </article>
+                </main>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ✅ IMAGE SWITCH SCRIPT -->
+<script>
+function changeImage(element){
+    document.getElementById("mainImage").src = element.src;
+
+    // remove active class from all thumbnails
+    document.querySelectorAll('.thumb-img').forEach(img => {
+        img.style.border = "2px solid transparent";
+    });
+
+    // highlight selected thumbnail
+    element.style.border = "2px solid #007bff";
+}
+</script>
+
+<!-- ✅ OPTIONAL STYLE -->
+<style>
+.thumb-img {
+    border: 2px solid transparent;
+    padding: 2px;
+}
+.thumb-img:hover {
+    border: 2px solid #007bff;
+}
+</style>
+
+{% endblock %}

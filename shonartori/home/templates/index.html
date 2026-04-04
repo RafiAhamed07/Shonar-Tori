@@ -26,6 +26,11 @@
             <div class="card-body d-flex flex-column">
                 <div class="product-name">{{ product.product_name }}</div>
                 <div class="price">৳ {{ product.price }}</div>
+                {% if product.is_in_stock %}
+                    <p class="small text-success mb-2" style="letter-spacing:0.12em;">In stock</p>
+                {% else %}
+                    <p class="small text-secondary mb-2" style="letter-spacing:0.12em;">Out of stock</p>
+                {% endif %}
                 <a href="{% url 'get_product' product.slug %}" class="btn-lux-primary mt-auto">View</a>
             </div>
         </div>

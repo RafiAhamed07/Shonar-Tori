@@ -1,0 +1,17 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block result_list %}
+<div class="module" style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: var(--body-quiet-color, #f8f8f8); border: 1px solid var(--hairline-color, #ddd); border-radius: 4px;">
+    <h2 style="margin: 0 0 0.5rem; font-size: 0.95rem;">{% trans "Sales snapshot (paid orders)" %}</h2>
+    <p style="margin: 0; font-size: 0.9rem;">
+        <strong>{% trans "Units sold" %}:</strong> {{ sales_units_paid }}
+        &nbsp;·&nbsp;
+        <strong>{% trans "Gross revenue (৳)" %}:</strong> {{ sales_revenue_paid }}
+    </p>
+    <p style="margin: 0.5rem 0 0; font-size: 0.8rem; opacity: 0.85;">
+        {% trans "Filter orders by status “Paid” and use date hierarchy for period review. Order lines below list every line item for analytics." %}
+    </p>
+</div>
+{{ block.super }}
+{% endblock %}

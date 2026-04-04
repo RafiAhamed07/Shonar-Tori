@@ -30,7 +30,12 @@
         <main class="col-lg-6">
             <p class="text-lux-muted small text-uppercase mb-2" style="letter-spacing:0.2em;">Shonartori</p>
             <h1 class="title mb-3">{{ product.product_name }}</h1>
-            <p class="price-tag mb-4">৳ {{ product.price }}</p>
+            <p class="price-tag mb-2">৳ {{ product.price }}</p>
+            {% if product.is_in_stock %}
+                <p class="small text-success mb-4" style="letter-spacing:0.15em;">In stock{% if product.stock <= 5 %} · only {{ product.stock }} left{% endif %}</p>
+            {% else %}
+                <p class="small text-secondary mb-4" style="letter-spacing:0.15em;">Out of stock</p>
+            {% endif %}
             <div class="text-lux-muted mb-4" style="line-height:1.7;">{{ product.product_description }}</div>
 
             {% if product.color_variant.count %}
@@ -57,9 +62,13 @@
             <form method="get" action="{% url 'add_to_cart' product.uid %}">
                 <div class="mb-3" style="max-width:140px;">
                     <label class="form-label">Quantity</label>
-                    <input type="number" name="quantity" value="1" min="1" class="form-control">
+                    <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control" {% if not product.is_in_stock %}disabled{% endif %}>
                 </div>
+                {% if product.is_in_stock %}
                 <button type="submit" class="btn btn-lux-primary px-5 py-2">Add to bag</button>
+                {% else %}
+                <button type="button" class="btn btn-outline-secondary px-5 py-2" disabled>Unavailable</button>
+                {% endif %}
             </form>
         </main>
     </div>

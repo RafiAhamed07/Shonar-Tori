@@ -30,7 +30,7 @@
 
     <div class="d-flex flex-wrap gap-2 mt-3">
       <a href="{% url 'order-detail' order.uid %}" class="btn btn-sm btn-outline-lux">Details</a>
-      {% if order.status == 'pending' or order.status == 'processing' %}
+        {% if order.status == 'pending' %}
       <a href="{% url 'cancel-order' order.uid %}" class="btn btn-sm btn-outline-danger border-secondary text-danger"
          onclick="return confirm('Cancel this order?');">Cancel</a>
       {% endif %}

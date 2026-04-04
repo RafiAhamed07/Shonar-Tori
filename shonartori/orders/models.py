@@ -1,6 +1,5 @@
 from django.db import models
 from base.models import BaseModel
-from buyer.models import Profile
 from products.models import Product
 from django.contrib.auth.models import User
 import uuid
@@ -12,12 +11,14 @@ class Order(BaseModel):
     total_price = models.IntegerField()
 
     STATUS_CHOICES = (
-        ('pending', 'Pending'),        # order placed
-        ('accepted', 'Accepted'),      # seller accepted
-        ('rejected', 'Rejected'),      # seller rejected
-        ('shipped', 'Shipped'),        # seller shipped
-        ('delivered', 'Delivered'),    # delivered
-        ('cancelled', 'Cancelled'),    # buyer cancelled
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
     )
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
@@ -25,9 +26,12 @@ class Order(BaseModel):
     address = models.TextField()
     phone = models.CharField(max_length=15)
 
-    # 🔥 NEW FIELDS
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
     payment_method = models.CharField(max_length=50, default='SSLCommerz')
+    inventory_committed = models.BooleanField(
+        default=False,
+        help_text="True when stock has been deducted for this order.",
+    )
 
     def __str__(self):
         return f"{self.uid} - {self.status}"

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db import transaction
 from products.models import Cart
 from .models import Order, OrderItem
 
@@ -8,6 +9,13 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from .inventory import (
+    InsufficientStock,
+    assert_cart_has_stock,
+    commit_inventory_for_order,
+    restore_inventory_for_order,
+)
 
 
 @login_required(login_url="login")
@@ -23,22 +31,29 @@ def checkout(request):
         address = request.POST.get("address")
         phone = request.POST.get("phone")
 
-        # Create Order
-        order = Order.objects.create(
-            user=request.user, total_price=total, address=address, phone=phone
-        )
+        try:
+            assert_cart_has_stock(cart)
+        except InsufficientStock as exc:
+            messages.error(request, str(exc))
+            return redirect("view-cart")
 
-        # Create Order Items
-        for item in cart.cart_items.all():
-            OrderItem.objects.create(
-                order=order,
-                product=item.product,
-                quantity=item.quantity,
-                price=item.product.price,
-            )
-
-        # Clear cart
-        cart.cart_items.all().delete()
+        try:
+            with transaction.atomic():
+                order = Order.objects.create(
+                    user=request.user, total_price=total, address=address, phone=phone
+                )
+                for item in cart.cart_items.all():
+                    OrderItem.objects.create(
+                        order=order,
+                        product=item.product,
+                        quantity=item.quantity,
+                        price=item.product.price,
+                    )
+                commit_inventory_for_order(order)
+                cart.cart_items.all().delete()
+        except InsufficientStock as exc:
+            messages.error(request, str(exc))
+            return redirect("view-cart")
 
         return redirect("order-success")
 
@@ -66,14 +81,22 @@ def order_detail(request, uid):
 def cancel_order(request, uid):
     order = get_object_or_404(Order, uid=uid, user=request.user)
 
-    # Only allow cancel if not completed
-    if order.status in ["pending", "processing"]:
-        order.status = "cancelled"
-        order.save()
+    if order.status == "pending":
+        try:
+            with transaction.atomic():
+                if order.inventory_committed:
+                    restore_inventory_for_order(order)
+                order.status = "cancelled"
+                order.save(update_fields=["status"])
+        except Exception:
+            messages.error(request, "Could not cancel order.")
+            return redirect("my-orders")
+        messages.success(request, "Order cancelled.")
 
     return redirect("my-orders")
 
 
+@login_required(login_url="login")
 def initiate_payment(request):
     if request.method != "POST":
         return redirect("checkout")
@@ -84,7 +107,6 @@ def initiate_payment(request):
         messages.warning(request, "Your cart is empty.")
         return redirect("view-cart")
 
-    # ✅ GET DATA FROM FORM
     address = request.POST.get("address")
     phone = request.POST.get("phone")
 
@@ -99,10 +121,15 @@ def initiate_payment(request):
         )
         return redirect("checkout")
 
+    try:
+        assert_cart_has_stock(cart)
+    except InsufficientStock as exc:
+        messages.error(request, str(exc))
+        return redirect("view-cart")
+
     total = sum(item.get_total_price() for item in cart.cart_items.all())
     tran_id = str(uuid.uuid4())
 
-    # ✅ SAVE address & phone HERE
     order = Order.objects.create(
         user=request.user,
         total_price=total,
@@ -137,8 +164,8 @@ def initiate_payment(request):
         "cancel_url": request.build_absolute_uri("/orders/callback/cancel/"),
         "cus_name": request.user.username,
         "cus_email": request.user.email,
-        "cus_phone": phone,  # ✅ USE FORM DATA
-        "cus_add1": address,  # ✅ USE FORM DATA
+        "cus_phone": phone,
+        "cus_add1": address,
         "cus_city": "Dhaka",
         "cus_country": "Bangladesh",
         "shipping_method": "NO",
@@ -158,17 +185,22 @@ def initiate_payment(request):
     return redirect("checkout")
 
 
-from django.views.decorators.csrf import csrf_exempt
-
-
 @csrf_exempt
 def payment_success(request):
     tran_id = request.POST.get("tran_id") or request.GET.get("tran_id")
     order = Order.objects.filter(transaction_id=tran_id).first()
     if order:
-        order.status = "paid"
-        order.save()
-        # Clear cart items
+        try:
+            with transaction.atomic():
+                order_locked = Order.objects.select_for_update().get(pk=order.pk)
+                commit_inventory_for_order(order_locked)
+                order_locked.status = "paid"
+                order_locked.save(update_fields=["status"])
+        except InsufficientStock:
+            order.status = "failed"
+            order.save(update_fields=["status"])
+            messages.error(request, "Payment recorded but inventory could not be fulfilled.")
+            return redirect("view-cart")
         cart = Cart.objects.filter(user=order.user).first()
         if cart:
             cart.cart_items.all().delete()

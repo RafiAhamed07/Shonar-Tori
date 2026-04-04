@@ -42,6 +42,10 @@ class Product(BaseModel):
     category = models.ForeignKey(Category , on_delete=models.CASCADE , related_name="products")
     price = models.IntegerField()
     product_description = models.TextField()
+    stock = models.PositiveIntegerField(
+        default=0,
+        help_text="Units available. 0 = out of stock.",
+    )
     color_variant = models.ManyToManyField(ColorVariant , blank=True)
     size_variant = models.ManyToManyField(SizeVariant , blank=True)
 
@@ -54,6 +58,10 @@ class Product(BaseModel):
 
     def __str__(self) -> str:
         return self.product_name
+
+    @property
+    def is_in_stock(self) -> bool:
+        return self.stock > 0
 
 
 

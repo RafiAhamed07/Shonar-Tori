@@ -1,0 +1,471 @@
+/* ShonarTori — luxury editorial theme (Bootstrap 5 companion) */
+
+:root {
+  --lux-bg: #0d0d0d;
+  --lux-bg-elevated: #161616;
+  --lux-border: rgba(201, 169, 98, 0.25);
+  --lux-gold: #c9a962;
+  --lux-gold-dim: #9a7b3c;
+  --lux-cream: #e8e4dc;
+  --lux-muted: #8a8680;
+  --lux-font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --lux-font-sans: "DM Sans", system-ui, sans-serif;
+}
+
+.luxury-body {
+  background-color: var(--lux-bg);
+  color: var(--lux-cream);
+  font-family: var(--lux-font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.luxury-body a {
+  color: var(--lux-gold);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.luxury-body a:hover {
+  color: #dfc98a;
+}
+
+/* Nav */
+.luxury-nav {
+  background: var(--lux-bg) !important;
+  border-bottom: 1px solid var(--lux-border);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.luxury-nav .navbar-brand {
+  font-family: var(--lux-font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--lux-cream) !important;
+}
+
+.luxury-nav .nav-link,
+.luxury-nav .btn {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.luxury-nav .btn-outline-lux {
+  border-color: var(--lux-border);
+  color: var(--lux-cream);
+  background: transparent;
+}
+
+.luxury-nav .btn-outline-lux:hover {
+  background: var(--lux-gold);
+  border-color: var(--lux-gold);
+  color: var(--lux-bg);
+}
+
+.luxury-nav .btn-gold {
+  background: var(--lux-gold);
+  border: none;
+  color: var(--lux-bg);
+  font-weight: 600;
+}
+
+.luxury-nav .btn-gold:hover {
+  background: #dfc98a;
+  color: var(--lux-bg);
+}
+
+.luxury-nav .dropdown-menu {
+  background: var(--lux-bg-elevated);
+  border: 1px solid var(--lux-border);
+  border-radius: 0;
+}
+
+.luxury-nav .dropdown-item {
+  color: var(--lux-cream);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.luxury-nav .dropdown-item:hover {
+  background: rgba(201, 169, 98, 0.15);
+  color: var(--lux-cream);
+}
+
+.luxury-nav .dropdown-item.text-danger:hover {
+  color: #f8a4a4 !important;
+}
+
+/* Main */
+.luxury-main {
+  flex: 1 0 auto;
+}
+
+.luxury-content {
+  max-width: 1320px;
+}
+
+/* Hero (home) */
+.luxury-hero {
+  position: relative;
+  min-height: 58vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: linear-gradient(
+      180deg,
+      rgba(13, 13, 13, 0.7) 0%,
+      var(--lux-bg) 100%
+    ),
+    radial-gradient(ellipse at 50% 0%, rgba(201, 169, 98, 0.12) 0%, transparent 55%);
+  border-bottom: 1px solid var(--lux-border);
+}
+
+.luxury-hero h1 {
+  font-family: var(--lux-font-serif);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lux-cream);
+  margin-bottom: 1rem;
+}
+
+.luxury-hero .lead {
+  font-family: var(--lux-font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--lux-muted);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.luxury-hero .divider {
+  width: 4rem;
+  height: 1px;
+  background: var(--lux-gold);
+  margin: 1.5rem auto;
+  opacity: 0.8;
+}
+
+/* Section titles */
+.luxury-section-title {
+  font-family: var(--lux-font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--lux-muted);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Product cards */
+.luxury-card-product {
+  background: var(--lux-bg-elevated);
+  border: 1px solid var(--lux-border);
+  border-radius: 0;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.luxury-card-product:hover {
+  border-color: rgba(201, 169, 98, 0.45);
+  transform: translateY(-4px);
+}
+
+.luxury-card-product .card-img-top {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: contrast(1.02);
+}
+
+.luxury-card-product .card-body {
+  padding: 1.25rem 1rem 1.5rem;
+}
+
+.luxury-card-product .product-name {
+  font-family: var(--lux-font-serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  color: var(--lux-cream);
+  margin-bottom: 0.35rem;
+}
+
+.luxury-card-product .price {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--lux-gold);
+  margin-bottom: 1rem;
+}
+
+.btn-lux-primary {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 0.65rem 1rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--lux-gold);
+  background: transparent;
+  color: var(--lux-gold);
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-lux-primary:hover {
+  background: var(--lux-gold);
+  color: var(--lux-bg);
+}
+
+button.btn-lux-primary,
+.btn.btn-lux-primary {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+button.btn-lux-primary:hover,
+.btn.btn-lux-primary:hover {
+  background: var(--lux-gold);
+  border-color: var(--lux-gold);
+  color: var(--lux-bg);
+}
+
+/* Product detail */
+.luxury-product-detail {
+  background: var(--lux-bg-elevated);
+  border: 1px solid var(--lux-border);
+  padding: 2rem;
+}
+
+.luxury-product-detail h1,
+.luxury-product-detail .title {
+  font-family: var(--lux-font-serif);
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: var(--lux-cream);
+}
+
+.luxury-product-detail .price-tag {
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  color: var(--lux-gold);
+}
+
+.luxury-product-detail .form-control {
+  background: var(--lux-bg);
+  border: 1px solid var(--lux-border);
+  color: var(--lux-cream);
+  border-radius: 0;
+}
+
+.luxury-product-detail .form-control:focus {
+  border-color: var(--lux-gold);
+  box-shadow: 0 0 0 0.15rem rgba(201, 169, 98, 0.2);
+  background: var(--lux-bg);
+  color: var(--lux-cream);
+}
+
+.luxury-product-detail .form-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lux-muted);
+}
+
+.thumb-img {
+  border: 2px solid transparent;
+  padding: 2px;
+  border-radius: 0;
+}
+
+.thumb-img:hover,
+.thumb-img.active-thumb {
+  border-color: var(--lux-gold);
+}
+
+/* Forms (auth, checkout) */
+.luxury-panel {
+  background: var(--lux-bg-elevated);
+  border: 1px solid var(--lux-border);
+  padding: 2.5rem;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.luxury-panel-wide {
+  max-width: 640px;
+}
+
+.luxury-panel h2 {
+  font-family: var(--lux-font-serif);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 1.35rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.luxury-panel .form-control {
+  background: var(--lux-bg);
+  border: 1px solid var(--lux-border);
+  color: var(--lux-cream);
+  border-radius: 0;
+  padding: 0.65rem 0.85rem;
+}
+
+.luxury-panel .form-control:focus {
+  border-color: var(--lux-gold);
+  box-shadow: 0 0 0 0.15rem rgba(201, 169, 98, 0.2);
+}
+
+.luxury-panel .form-text {
+  color: var(--lux-muted);
+}
+
+/* Forms sitewide (profile, checkout, etc.) */
+.luxury-body .form-control:not(.btn) {
+  background: var(--lux-bg);
+  border: 1px solid var(--lux-border);
+  color: var(--lux-cream);
+  border-radius: 0;
+}
+
+.luxury-body .form-control:focus {
+  border-color: var(--lux-gold);
+  box-shadow: 0 0 0 0.15rem rgba(201, 169, 98, 0.2);
+  background: var(--lux-bg);
+  color: var(--lux-cream);
+}
+
+.luxury-body .form-check-input:checked {
+  background-color: var(--lux-gold);
+  border-color: var(--lux-gold);
+}
+
+/* Tables */
+.luxury-table-wrap {
+  border: 1px solid var(--lux-border);
+  overflow: hidden;
+}
+
+.luxury-table-wrap .table {
+  margin-bottom: 0;
+  color: var(--lux-cream);
+  --bs-table-bg: var(--lux-bg-elevated);
+  --bs-table-border-color: var(--lux-border);
+}
+
+.luxury-table-wrap .table thead th {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lux-muted);
+  border-bottom-color: var(--lux-border);
+}
+
+/* Cards orders */
+.luxury-order-card {
+  background: var(--lux-bg-elevated);
+  border: 1px solid var(--lux-border);
+  border-radius: 0;
+}
+
+.luxury-order-card .card-header {
+  background: transparent;
+  border-bottom: 1px solid var(--lux-border);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+/* Alerts */
+.luxury-body .alert {
+  border-radius: 0;
+  border: 1px solid var(--lux-border);
+}
+
+.luxury-body .alert-success {
+  background: rgba(201, 169, 98, 0.12);
+  color: var(--lux-cream);
+  border-color: rgba(201, 169, 98, 0.35);
+}
+
+.luxury-body .alert-danger,
+.luxury-body .alert-error {
+  background: rgba(180, 60, 60, 0.15);
+  color: #f0c4c4;
+  border-color: rgba(180, 80, 80, 0.4);
+}
+
+.luxury-body .alert-warning {
+  background: rgba(201, 169, 98, 0.08);
+  color: var(--lux-cream);
+}
+
+.luxury-body .alert-info {
+  background: var(--lux-bg-elevated);
+  color: var(--lux-cream);
+}
+
+.luxury-body .btn-close {
+  filter: invert(1);
+  opacity: 0.5;
+}
+
+/* Footer */
+.luxury-footer {
+  border-top: 1px solid var(--lux-border);
+  background: var(--lux-bg);
+  padding: 3rem 0 2rem;
+  margin-top: auto;
+  font-size: 0.8rem;
+}
+
+.luxury-footer h6 {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lux-muted);
+  margin-bottom: 1rem;
+}
+
+.luxury-footer a {
+  color: var(--lux-muted);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.luxury-footer a:hover {
+  color: var(--lux-gold);
+}
+
+.luxury-footer .footer-brand {
+  font-family: var(--lux-font-serif);
+  letter-spacing: 0.3em;
+  font-size: 1rem;
+  color: var(--lux-cream);
+  margin-bottom: 0.75rem;
+}
+
+/* Utilities */
+.text-lux-muted {
+  color: var(--lux-muted) !important;
+}
+
+.border-lux {
+  border-color: var(--lux-border) !important;
+}

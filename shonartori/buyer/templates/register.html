@@ -1,18 +1,33 @@
 {% extends "base.html" %}
+{% block title %}Register — Shonartori{% endblock %}
 
 {% block content %}
-
-<h2>Register</h2>
-
-<form method="POST">
-    {% csrf_token %}
-
-    <input type="text" name="first_name" class="form-control mb-2" placeholder="First Name">
-    <input type="text" name="last_name" class="form-control mb-2" placeholder="Last Name">
-    <input type="email" name="email" class="form-control mb-2" placeholder="Email">
-    <input type="password" name="password" class="form-control mb-2" placeholder="Password">
-
-    <button class="btn btn-warning w-100">Register</button>
-</form>
-
+<div class="luxury-panel luxury-panel-wide">
+    <h2>Register</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">First name</label>
+                <input type="text" name="first_name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Last name</label>
+                <input type="text" name="last_name" class="form-control" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Email</label>
+            <input type="email" name="email" class="form-control" required autocomplete="email">
+        </div>
+        <div class="mb-4">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Password</label>
+            <input type="password" name="password" class="form-control" required autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-gold w-100 py-2 mb-3">Create account</button>
+        <p class="text-center text-lux-muted small mb-0">
+            Already a member? <a href="{% url 'login' %}">Sign in</a>
+        </p>
+    </form>
+</div>
 {% endblock %}

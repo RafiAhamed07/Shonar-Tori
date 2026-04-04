@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}{{ product.product_name }} - Shonartori{% endblock %}
-{% block content %}
+{% block title %}{{ product.product_name }} — Shonartori{% endblock %}
 
-<div class="container my-5">
-  <div class="row">
-    <div class="col-md-6">
+{% block content %}
+<div class="luxury-product-detail">
+  <div class="row g-4 g-lg-5">
+    <div class="col-lg-6">
       {% if product.product_images.all %}
       <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           {% for image in product.product_images.all %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.product_name }}" />
+            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.product_name }}" style="max-height:520px; object-fit:contain;" />
           </div>
           {% endfor %}
         </div>
@@ -23,24 +23,26 @@
         </button>
       </div>
       {% else %}
-      <img src="{% static 'images/no-image.png' %}" class="img-fluid" alt="No image" />
+      <div class="text-center p-5 bg-secondary bg-opacity-10 border border-lux">
+        <img src="{% static 'images/no-image.png' %}" class="img-fluid" alt="" style="max-height:320px;" />
+      </div>
       {% endif %}
     </div>
 
-    <div class="col-md-6">
-      <h2>{{ product.product_name }}</h2>
-      <h4 class="text-success">৳ {{ product.price }}</h4>
-      <p>{{ product.product_description }}</p>
+    <div class="col-lg-6">
+      <p class="text-lux-muted small text-uppercase mb-2" style="letter-spacing:0.2em;">Shonartori</p>
+      <h1 class="title mb-3">{{ product.product_name }}</h1>
+      <p class="price-tag mb-4">৳ {{ product.price }}</p>
+      <div class="text-lux-muted mb-4" style="line-height:1.7;">{{ product.product_description }}</div>
 
       <form method="get" action="{% url 'add_to_cart' product.uid %}">
-        <div class="mb-3">
-          <label class="form-label">Quantity:</label>
+        <div class="mb-3" style="max-width:140px;">
+          <label class="form-label">Quantity</label>
           <input type="number" class="form-control" name="quantity" value="1" min="1" />
         </div>
-        <button type="submit" class="btn btn-primary">Add to Cart</button>
+        <button type="submit" class="btn btn-lux-primary px-5 py-2">Add to bag</button>
       </form>
     </div>
   </div>
 </div>
-
 {% endblock %}

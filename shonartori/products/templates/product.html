@@ -1,133 +1,77 @@
 {% extends "base.html" %}
-{% block title %}{{ product.product_name }} - Shonartori{% endblock %}
+{% block title %}{{ product.product_name }} — Shonartori{% endblock %}
 
 {% block content %}
-
-<section class="section-content padding-y bg">
-    <div class="container">
-
-        <div class="card p-3">
-            <div class="row">
-
-                <!-- PRODUCT IMAGES -->
-                <aside class="col-md-6">
-                    <article class="gallery-wrap">
-
-                        <!-- MAIN IMAGE -->
-                        <div class="img-big-wrap mb-3 text-center">
-                            {% if product.product_images.first %}
-                                <img id="mainImage"
-                                     src="{{ product.product_images.first.image.url }}"
-                                     class="img-fluid rounded"
-                                     style="max-height:400px;">
-                            {% else %}
-                                <img id="mainImage"
-                                     src="https://via.placeholder.com/400"
-                                     class="img-fluid rounded">
-                            {% endif %}
-                        </div>
-
-                        <!-- THUMBNAILS -->
-                        <div class="thumbs-wrap d-flex gap-2 flex-wrap justify-content-center">
-                            {% for image in product.product_images.all %}
-                                <img src="{{ image.image.url }}"
-                                     class="img-thumbnail thumb-img"
-                                     style="height:70px; cursor:pointer;"
-                                     onclick="changeImage(this)">
-                            {% endfor %}
-                        </div>
-
-                    </article>
-                </aside>
-
-                <!-- PRODUCT DETAILS -->
-                <main class="col-md-6">
-                    <article class="content-body">
-
-                        <h2 class="title">{{ product.product_name }}</h2>
-
-                        <!-- PRICE -->
-                        <div class="mb-3">
-                            <h4 class="text-success">৳ {{ product.price }}</h4>
-                        </div>
-
-                        <!-- DESCRIPTION -->
-                        <p>{{ product.product_description }}</p>
-
-                        <hr>
-
-                        <!-- COLOR VARIANTS -->
-                        {% if product.color_variant.count %}
-                        <div class="mb-3">
-                            <label><b>Available Colors:</b></label><br>
-                            {% for color in product.color_variant.all %}
-                                <span class="badge bg-dark">{{ color.color_name }}</span>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
-                        <!-- SIZE VARIANTS -->
-                        {% if product.size_variant.count %}
-                        <div class="mb-3">
-                            <label><b>Select Size:</b></label><br>
-
-                            {% for size in product.size_variant.all %}
-                                <label class="me-3">
-                                    <input type="radio" name="select_size" value="{{ size.uid }}">
-                                    {{ size.size_name }}
-                                </label>
-                            {% endfor %}
-
-                        </div>
-                        {% endif %}
-
-                        <!-- QUANTITY -->
-                        <form method="get" action="{% url 'add_to_cart' product.uid %}">
-                            <div class="form-group mb-3" style="width:120px;">
-                                <label>Quantity</label>
-                                <input type="number" name="quantity" value="1" min="1" class="form-control">
-                            </div>
-
-                            <!-- BUTTONS -->
-                            <div class="mt-4">
-                                {% comment %} <button type="button" class="btn btn-primary me-2" disabled>Buy Now</button> {% endcomment %}
-                                <button type="submit" class="btn btn-outline-primary">Add to Cart 🛒</button>
-                            </div>
-                        </form>
-
-                    </article>
-                </main>
-
+<div class="luxury-product-detail">
+    <div class="row g-4 g-lg-5">
+        <aside class="col-lg-6">
+            <div class="text-center mb-3">
+                {% if product.product_images.first %}
+                    <img id="mainImage"
+                         src="{{ product.product_images.first.image.url }}"
+                         class="img-fluid w-100"
+                         style="max-height:520px; object-fit:contain;"
+                         alt="{{ product.product_name }}">
+                {% else %}
+                    <div class="bg-secondary bg-opacity-25 w-100" style="min-height:400px;"></div>
+                {% endif %}
             </div>
-        </div>
+            <div class="d-flex gap-2 flex-wrap justify-content-center">
+                {% for image in product.product_images.all %}
+                    <img src="{{ image.image.url }}"
+                         class="thumb-img"
+                         style="height:72px; width:auto; cursor:pointer; object-fit:cover;"
+                         alt=""
+                         onclick="changeImage(this)">
+                {% endfor %}
+            </div>
+        </aside>
 
+        <main class="col-lg-6">
+            <p class="text-lux-muted small text-uppercase mb-2" style="letter-spacing:0.2em;">Shonartori</p>
+            <h1 class="title mb-3">{{ product.product_name }}</h1>
+            <p class="price-tag mb-4">৳ {{ product.price }}</p>
+            <div class="text-lux-muted mb-4" style="line-height:1.7;">{{ product.product_description }}</div>
+
+            {% if product.color_variant.count %}
+            <div class="mb-4">
+                <span class="form-label d-block mb-2">Colour</span>
+                {% for color in product.color_variant.all %}
+                    <span class="badge rounded-0 border border-lux text-lux-muted me-1 mb-1">{{ color.color_name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if product.size_variant.count %}
+            <div class="mb-4">
+                <span class="form-label d-block mb-2">Size</span>
+                {% for size in product.size_variant.all %}
+                    <label class="me-3 text-lux-muted">
+                        <input type="radio" name="select_size" value="{{ size.uid }}" class="form-check-input border-secondary">
+                        {{ size.size_name }}
+                    </label>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="get" action="{% url 'add_to_cart' product.uid %}">
+                <div class="mb-3" style="max-width:140px;">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" name="quantity" value="1" min="1" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-lux-primary px-5 py-2">Add to bag</button>
+            </form>
+        </main>
     </div>
-</section>
+</div>
 
-<!-- ✅ IMAGE SWITCH SCRIPT -->
 <script>
-function changeImage(element){
-    document.getElementById("mainImage").src = element.src;
-
-    // remove active class from all thumbnails
-    document.querySelectorAll('.thumb-img').forEach(img => {
-        img.style.border = "2px solid transparent";
+function changeImage(el) {
+    document.getElementById("mainImage").src = el.src;
+    document.querySelectorAll('.thumb-img').forEach(function(img) {
+        img.classList.remove('active-thumb');
     });
-
-    // highlight selected thumbnail
-    element.style.border = "2px solid #007bff";
+    el.classList.add('active-thumb');
 }
 </script>
-
-<!-- ✅ OPTIONAL STYLE -->
-<style>
-.thumb-img {
-    border: 2px solid transparent;
-    padding: 2px;
-}
-.thumb-img:hover {
-    border: 2px solid #007bff;
-}
-</style>
-
 {% endblock %}

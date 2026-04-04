@@ -1,14 +1,28 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container mt-5">
-  <h2>Checkout</h2>
+{% extends "base.html" %}
+{% block title %}Checkout — Shonartori{% endblock %}
 
-  <form method="POST" action="{% url 'initiate-payment' %}">
-    {% csrf_token %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <h2 class="luxury-section-title text-start mb-4" style="text-align:left !important;">Checkout</h2>
+    <p class="text-lux-muted small mb-4">Shipping &amp; contact details for your order.</p>
 
-    <input type="text" name="address" placeholder="Enter Address" required />
-    <input type="text" name="phone" placeholder="Enter Phone" required />
-
-    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-  </form>
+    <div class="luxury-order-card">
+      <div class="card-body p-4">
+        <form method="POST" action="{% url 'initiate-payment' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Address</label>
+            <textarea name="address" class="form-control" rows="3" placeholder="Full address" required></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Phone</label>
+            <input type="text" name="phone" class="form-control" placeholder="Phone number" required>
+          </div>
+          <button type="submit" class="btn btn-lux-primary w-100 py-2">Proceed to payment</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

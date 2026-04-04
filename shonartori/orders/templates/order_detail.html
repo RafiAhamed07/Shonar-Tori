@@ -1,38 +1,43 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title %}Order {{ order.uid }} — Shonartori{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Order Details</h2>
+<div class="luxury-order-card">
+  <div class="card-body p-4">
+    <p class="text-lux-muted small text-uppercase mb-2" style="letter-spacing:0.2em;">Order detail</p>
+    <h2 class="h4 mb-4" style="font-family: var(--lux-font-serif); letter-spacing:0.06em;">{{ order.uid }}</h2>
 
-    <p><strong>Order ID:</strong> {{ order.uid }}</p>
-    <p><strong>Status:</strong> {{ order.status }}</p>
-    <p><strong>Total:</strong> ৳{{ order.total_price }}</p>
+    <p><span class="text-lux-muted">Status</span> <strong class="ms-2">{{ order.status }}</strong></p>
+    <p><span class="text-lux-muted">Total</span> <strong class="ms-2">৳{{ order.total_price }}</strong></p>
 
-    <hr>
+    <hr class="border-lux my-4">
 
-    <h4>Items:</h4>
+    <h6 class="small text-uppercase text-lux-muted mb-3" style="letter-spacing:0.15em;">Items</h6>
 
-    <table class="table">
+    <div class="luxury-table-wrap">
+      <table class="table">
         <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Total</th>
-            </tr>
+          <tr>
+            <th>Product</th>
+            <th class="text-end">Price</th>
+            <th class="text-center">Qty</th>
+            <th class="text-end">Total</th>
+          </tr>
         </thead>
-
         <tbody>
-            {% for item in order.order_items.all %}
-            <tr>
-                <td>{{ item.product.product_name }}</td>
-                <td>৳{{ item.price }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>৳{{ item.get_total_price }}</td>
-            </tr>
-            {% endfor %}
+          {% for item in order.order_items.all %}
+          <tr>
+            <td>{{ item.product.product_name }}</td>
+            <td class="text-end">৳{{ item.price }}</td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-end">৳{{ item.get_total_price }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
+      </table>
+    </div>
 
+    <a href="{% url 'my-orders' %}" class="btn btn-outline-lux mt-3">Back to orders</a>
+  </div>
 </div>
 {% endblock %}

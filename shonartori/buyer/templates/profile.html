@@ -1,77 +1,73 @@
 {% extends "base.html" %}
-{% block title %}My Profile - Shonartori{% endblock %}
+{% block title %}My Profile — Shonartori{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-lg-8">
-    <h2 class="mb-4">My Profile</h2>
+    <h2 class="luxury-section-title text-start mb-4" style="text-align:left !important;">My Profile</h2>
 
-    <div class="card shadow-sm mb-4">
-      <div class="card-header bg-dark text-white">
-        Account info
-      </div>
-      <div class="card-body">
+    <div class="luxury-order-card mb-4">
+      <div class="card-header py-3 text-uppercase small" style="letter-spacing:0.15em;">Account</div>
+      <div class="card-body p-4">
         <form method="post" enctype="multipart/form-data" action="{% url 'profile' %}">
           {% csrf_token %}
           <input type="hidden" name="action" value="update_profile">
 
           <div class="row mb-3">
-            <div class="col-md-6">
-              <label class="form-label">First name</label>
+            <div class="col-md-6 mb-3 mb-md-0">
+              <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">First name</label>
               <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" maxlength="150">
             </div>
             <div class="col-md-6">
-              <label class="form-label">Last name</label>
+              <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Last name</label>
               <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" maxlength="150">
             </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" value="{{ user.email }}" disabled readonly aria-readonly="true">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Email</label>
+            <input type="email" class="form-control" value="{{ user.email }}" disabled readonly>
             <div class="form-text">Email cannot be changed.</div>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label">Profile photo</label>
+          <div class="mb-4">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Profile photo</label>
             {% if user.profile.profile_image %}
               <div class="mb-2">
-                <img src="{{ user.profile.profile_image.url }}" alt="Profile" class="rounded-circle" width="96" height="96" style="object-fit: cover;">
+                <img src="{{ user.profile.profile_image.url }}" alt="" class="rounded-circle border border-secondary" width="96" height="96" style="object-fit:cover;">
               </div>
             {% endif %}
             <input type="file" name="profile_image" class="form-control" accept="image/*">
-            <div class="form-text">Optional. Upload a new image to replace the current one.</div>
+            <div class="form-text">Optional — upload a new image to replace the current one.</div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Save profile</button>
+          <button type="submit" class="btn btn-lux-primary px-4 py-2">Save profile</button>
         </form>
       </div>
     </div>
 
-    <div class="card shadow-sm">
-      <div class="card-header bg-secondary text-white">
-        Change password
-      </div>
-      <div class="card-body">
+    <div class="luxury-order-card">
+      <div class="card-header py-3 text-uppercase small" style="letter-spacing:0.15em;">Password</div>
+      <div class="card-body p-4">
         <form method="post" action="{% url 'profile' %}">
           {% csrf_token %}
           <input type="hidden" name="action" value="change_password">
 
           <div class="mb-3">
-            <label class="form-label">Current password</label>
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Current password</label>
             <input type="password" name="current_password" class="form-control" required autocomplete="current-password">
           </div>
           <div class="mb-3">
-            <label class="form-label">New password</label>
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">New password</label>
             <input type="password" name="new_password" class="form-control" required minlength="8" autocomplete="new-password">
             <div class="form-text">At least 8 characters.</div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Confirm new password</label>
+          <div class="mb-4">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Confirm new password</label>
             <input type="password" name="confirm_password" class="form-control" required minlength="8" autocomplete="new-password">
           </div>
 
-          <button type="submit" class="btn btn-warning">Update password</button>
+          <button type="submit" class="btn btn-gold px-4 py-2">Update password</button>
         </form>
       </div>
     </div>

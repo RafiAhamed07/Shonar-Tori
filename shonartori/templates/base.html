@@ -1,96 +1,121 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>{% block title %}Shonartori{% endblock %}</title>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- BOOTSTRAP CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/luxury.css' %}" rel="stylesheet">
 </head>
 
-<body>
+<body class="luxury-body">
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark luxury-nav sticky-top">
     <div class="container">
-
         <a class="navbar-brand" href="{% url 'index' %}">Shonartori</a>
 
-        <div class="d-flex align-items-center">
+        <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#luxNav"
+                aria-controls="luxNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'view-cart' %}" class="btn btn-outline-light me-2">My Cart</a>
-                <a href="{% url 'my-orders' %}" class="btn btn-outline-info me-3">My Orders</a>
+        <div class="collapse navbar-collapse" id="luxNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
+                <li class="nav-item">
+                    <a class="nav-link text-light px-lg-3" href="{% url 'index' %}">Collection</a>
+                </li>
+            </ul>
 
-                <!-- USER DROPDOWN -->
-                <div class="dropdown">
-                    <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                       href="#"
-                       data-bs-toggle="dropdown">
+            <div class="d-flex flex-wrap align-items-center justify-content-lg-end gap-2 mt-3 mt-lg-0">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'view-cart' %}" class="btn btn-sm btn-outline-lux">Bag</a>
+                    <a href="{% url 'my-orders' %}" class="btn btn-sm btn-outline-lux d-none d-md-inline-block">Orders</a>
 
-                        <!-- PROFILE IMAGE -->
-                        {% if request.user.profile.profile_image %}
-                            <img src="{{ request.user.profile.profile_image.url }}"
-                                 class="rounded-circle"
-                                 width="40"
-                                 height="40"
-                                 style="object-fit: cover;">
-                        {% else %}
-                            <img src="/media/profile/default.png"
-                                 class="rounded-circle"
-                                 width="40"
-                                 height="40">
-                        {% endif %}
-
-                        <span class="ms-2">
-                            {{ request.user.first_name|default:request.user.username }}
-                        </span>
-                    </a>
-
-                    <!-- DROPDOWN MENU -->
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
-                        <li><a class="dropdown-item" href="{% url 'view-cart' %}">My Cart</a></li>
-                        <li><a class="dropdown-item" href="{% url 'my-orders' %}">My Orders</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item text-danger" href="{% url 'logout' %}">
-                                Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-            {% else %}
-
-                <!-- NOT LOGGED IN -->
-                <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Login</a>
-                <a href="{% url 'register' %}" class="btn btn-warning">Register</a>
-
-            {% endif %}
-
+                    <div class="dropdown">
+                        <a class="d-flex align-items-center text-light text-decoration-none dropdown-toggle small text-uppercase"
+                           href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if request.user.profile.profile_image %}
+                                <img src="{{ request.user.profile.profile_image.url }}"
+                                     class="rounded-circle border border-secondary"
+                                     width="36" height="36" style="object-fit: cover;" alt="">
+                            {% else %}
+                                <img src="/media/profile/default.png"
+                                     class="rounded-circle border border-secondary"
+                                     width="36" height="36" alt="">
+                            {% endif %}
+                            <span class="ms-2 d-none d-sm-inline" style="letter-spacing:0.1em;">
+                                {{ request.user.first_name|default:request.user.username }}
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'view-cart' %}">My Cart</a></li>
+                            <li><a class="dropdown-item" href="{% url 'my-orders' %}">My Orders</a></li>
+                            <li><hr class="dropdown-divider border-secondary"></li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-outline-lux">Sign In</a>
+                    <a href="{% url 'register' %}" class="btn btn-sm btn-gold">Register</a>
+                {% endif %}
+            </div>
         </div>
-
     </div>
 </nav>
 
-<!-- CONTENT -->
-<div class="container mt-4">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{% block hero %}{% endblock %}
+
+<main class="luxury-main">
+    <div class="container py-4 luxury-content">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<footer class="luxury-footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="footer-brand">Shonartori</div>
+                <p class="text-lux-muted mb-0 small">Curated pieces with a timeless spirit. Crafted for those who dress with intention.</p>
             </div>
-        {% endfor %}
-    {% endif %}
-    {% block content %}{% endblock %}
-</div>
+            <div class="col-6 col-md-2">
+                <h6>Shop</h6>
+                <a href="{% url 'index' %}">Collection</a>
+            </div>
+            <div class="col-6 col-md-3">
+                <h6>Account</h6>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'view-cart' %}">Bag</a>
+                    <a href="{% url 'my-orders' %}">Orders</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Sign In</a>
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+            <div class="col-md-3 text-md-end">
+                <p class="text-lux-muted small mb-0">&copy; {% now "Y" %} Shonartori</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
-<!-- BOOTSTRAP JS (IMPORTANT for dropdown) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

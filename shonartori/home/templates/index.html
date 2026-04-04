@@ -1,31 +1,39 @@
 {% extends "base.html" %}
-{% block title %}All Products - Shonartori{% endblock %}
+{% block title %}Collection — Shonartori{% endblock %}
+
+{% block hero %}
+<section class="luxury-hero">
+    <div class="container">
+        <h1>Heritage &amp; Craft</h1>
+        <div class="divider"></div>
+        <p class="lead">A curated edit — craft, silhouette, and the quiet confidence of pieces meant to last.</p>
+    </div>
+</section>
+{% endblock %}
 
 {% block content %}
+<p class="luxury-section-title">The Collection</p>
 
-<h2 class="mb-4">All Products</h2>
-
-<div class="row">
+<div class="row g-4">
     {% for product in products %}
-    <div class="col-md-4">
-        <div class="card mb-4">
-
+    <div class="col-6 col-lg-4">
+        <div class="card luxury-card-product h-100">
             {% if product.product_images.first %}
-                <img src="{{ product.product_images.first.image.url }}" class="card-img-top">
+                <img src="{{ product.product_images.first.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
+            {% else %}
+                <div class="card-img-top bg-secondary bg-opacity-25" style="aspect-ratio:3/4;"></div>
             {% endif %}
-
-            <div class="card-body">
-                <h5>{{ product.product_name }}</h5>
-                <p>৳ {{ product.price }}</p>
-
-                <a href="{% url 'get_product' product.slug %}" class="btn btn-primary">
-                    View Product
-                </a>
+            <div class="card-body d-flex flex-column">
+                <div class="product-name">{{ product.product_name }}</div>
+                <div class="price">৳ {{ product.price }}</div>
+                <a href="{% url 'get_product' product.slug %}" class="btn-lux-primary mt-auto">View</a>
             </div>
-
         </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center text-lux-muted py-5">
+        <p class="mb-0">No pieces in the collection yet.</p>
     </div>
     {% endfor %}
 </div>
-
 {% endblock %}

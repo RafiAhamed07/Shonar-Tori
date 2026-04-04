@@ -1,73 +1,49 @@
-{% extends 'base.html' %} {% block content %}
+{% extends "base.html" %}
+{% block title %}Bag — Shonartori{% endblock %}
 
-<div class="container mt-5">
-  <h2 class="mb-4">🛒 Your Cart</h2>
+{% block content %}
+<h2 class="luxury-section-title text-start mb-4" style="text-align:left !important;">Your Bag</h2>
 
-  {% if cart and cart.cart_items.all %}
+{% if cart and cart.cart_items.all %}
 
-  <table class="table table-bordered text-center align-middle">
-    <thead class="table-dark">
+<div class="luxury-table-wrap mb-4">
+  <table class="table align-middle">
+    <thead>
       <tr>
         <th>Product</th>
-        <th>Price</th>
-        <th width="200">Quantity</th>
-        <th>Total</th>
-        <th>Action</th>
+        <th class="text-end">Price</th>
+        <th class="text-center" style="min-width:9rem;">Quantity</th>
+        <th class="text-end">Total</th>
+        <th></th>
       </tr>
     </thead>
-
     <tbody>
       {% for item in cart.cart_items.all %}
       <tr>
         <td>{{ item.product.product_name }}</td>
-        <td>৳{{ item.product.price }}</td>
-
-        <!-- Quantity Control -->
-        <td>
-          <a
-            href="{% url 'update-cart' item.uid 'decrease' %}"
-            class="btn btn-sm btn-danger"
-            >-</a
-          >
-
+        <td class="text-end text-lux-muted">৳{{ item.product.price }}</td>
+        <td class="text-center">
+          <a href="{% url 'update-cart' item.uid 'decrease' %}" class="btn btn-sm btn-outline-lux py-0 px-2">−</a>
           <span class="mx-2">{{ item.quantity }}</span>
-
-          <a
-            href="{% url 'update-cart' item.uid 'increase' %}"
-            class="btn btn-sm btn-success"
-            >+</a
-          >
+          <a href="{% url 'update-cart' item.uid 'increase' %}" class="btn btn-sm btn-outline-lux py-0 px-2">+</a>
         </td>
-
-        <td>৳{{ item.get_total_price }}</td>
-
-        <!-- Remove -->
-        <td>
-          <a
-            href="{% url 'remove-cart' item.uid %}"
-            class="btn btn-sm btn-warning"
-          >
-            Remove
-          </a>
+        <td class="text-end">৳{{ item.get_total_price }}</td>
+        <td class="text-end">
+          <a href="{% url 'remove-cart' item.uid %}" class="btn btn-sm btn-outline-secondary border-lux text-lux-muted">Remove</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-
-  <!-- TOTAL -->
-  <div class="text-end">
-    <h4>Total: <strong>৳{{ total }}</strong></h4>
-
-    <!-- Checkout -->
-    <a href="{% url 'checkout' %}" class="btn btn-primary">
-      Proceed to Checkout
-    </a>
-  </div>
-
-  {% else %}
-  <p>Your cart is empty 😔</p>
-  {% endif %}
 </div>
 
+<div class="text-end">
+  <p class="fs-5 mb-3" style="letter-spacing:0.08em;">Total <strong class="text-warning">৳{{ total }}</strong></p>
+  <a href="{% url 'checkout' %}" class="btn btn-lux-primary px-5 py-2 d-inline-block w-auto">Proceed to checkout</a>
+</div>
+
+{% else %}
+<p class="text-lux-muted text-center py-5">Your bag is empty.</p>
+<p class="text-center"><a href="{% url 'index' %}" class="btn btn-outline-lux">Continue shopping</a></p>
+{% endif %}
 {% endblock %}

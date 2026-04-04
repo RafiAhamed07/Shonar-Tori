@@ -1,16 +1,23 @@
 {% extends "base.html" %}
+{% block title %}Sign In — Shonartori{% endblock %}
 
 {% block content %}
-
-<h2>Login</h2>
-
-<form method="POST">
-    {% csrf_token %}
-
-    <input type="email" name="email" class="form-control mb-2" placeholder="Email">
-    <input type="password" name="password" class="form-control mb-2" placeholder="Password">
-
-    <button class="btn btn-primary w-100">Login</button>
-</form>
-
+<div class="luxury-panel luxury-panel-wide">
+    <h2>Sign In</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="you@example.com" required autocomplete="username">
+        </div>
+        <div class="mb-4">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Password</label>
+            <input type="password" name="password" class="form-control" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-lux-primary w-100 py-2 mb-3">Sign In</button>
+        <p class="text-center text-lux-muted small mb-0">
+            New here? <a href="{% url 'register' %}">Create an account</a>
+        </p>
+    </form>
+</div>
 {% endblock %}

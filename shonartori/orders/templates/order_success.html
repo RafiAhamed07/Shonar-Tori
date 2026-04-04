@@ -1,15 +1,14 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title %}Thank you — Shonartori{% endblock %}
 
 {% block content %}
-<div class="container text-center mt-5">
-    <h2>🎉 Order Placed Successfully!</h2>
-
-    <a href="{% url 'index' %}" class="btn btn-primary mt-3">
-        Continue Shopping
-    </a>
-
-    <a href="{% url 'my-orders' %}" class="btn btn-dark mt-3">
-        View Orders
-    </a>
+<div class="text-center py-5">
+    <p class="text-lux-muted small text-uppercase mb-3" style="letter-spacing:0.25em;">Thank you</p>
+    <h2 class="mb-3" style="font-family: var(--lux-font-serif); font-size: 2rem; letter-spacing: 0.08em;">Order placed successfully</h2>
+    <p class="text-lux-muted mb-5 mx-auto" style="max-width: 28rem;">We are grateful for your patronage. You will receive updates as your order progresses.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="{% url 'index' %}" class="btn btn-lux-primary px-4 py-2">Continue shopping</a>
+        <a href="{% url 'my-orders' %}" class="btn btn-outline-lux px-4 py-2">View orders</a>
+    </div>
 </div>
 {% endblock %}

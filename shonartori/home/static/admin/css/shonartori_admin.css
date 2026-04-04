@@ -1,0 +1,237 @@
+/* ShonarTori — Django admin polish */
+
+#header {
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+#site-name a,
+#site-name a:hover {
+  color: #f5f0e8;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.st-admin-badge {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  background: #c9a962;
+  color: #1a1a1a;
+  border-radius: 2px;
+}
+
+.module h2,
+.module caption {
+  background: #2d2d2d;
+  color: #e8e4dc;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#content {
+  padding: 1.25rem 2rem 2rem;
+}
+
+/* Dashboard */
+.st-admin-dashboard {
+  margin-bottom: 2rem;
+  padding: 1.5rem 1.75rem;
+  background: #fafafa;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+}
+
+.st-admin-dashboard__header h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.st-admin-dashboard__sub {
+  margin: 0 0 1.25rem;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.st-admin-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.st-metric-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.st-metric-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.st-metric-card__value {
+  margin: 0 0 0.35rem;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.st-metric-card__suffix {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.st-metric-card__meta {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.st-metric-card__list {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+  color: #444;
+}
+
+.st-metric-card__list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.st-metric-card__list li:last-child {
+  border-bottom: none;
+}
+
+.st-metric-card__link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #417690;
+  text-decoration: none;
+}
+
+.st-metric-card__link:hover {
+  text-decoration: underline;
+}
+
+.st-text-warn {
+  color: #b45309;
+}
+
+.st-admin-quicklinks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.st-admin-quicklinks li {
+  margin-bottom: 0.45rem;
+}
+
+.st-admin-quicklinks a {
+  color: #417690;
+  font-weight: 500;
+}
+
+/* Order changelist banner */
+.st-order-sales-banner {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #eef1f4 100%);
+  border: 1px solid #dde2e8;
+  border-radius: 6px;
+}
+
+.st-order-sales-banner h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.st-order-sales-banner p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #444;
+}
+
+.st-order-sales-banner .st-banner-stats {
+  margin-top: 0.65rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #205067;
+}
+
+/* Status pills (list display) */
+.st-pill {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+.st-pill--paid {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.st-pill--pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.st-pill--failed,
+.st-pill--cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.st-pill--shipped {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.st-pill--delivered {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.st-pill--default {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* Stock column */
+.st-stock-ok {
+  color: #047857;
+  font-weight: 600;
+}
+
+.st-stock-no {
+  color: #b91c1c;
+  font-weight: 600;
+}

@@ -2,15 +2,22 @@
 {% load i18n %}
 
 {% block result_list %}
-<div class="module" style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: var(--body-quiet-color, #f8f8f8); border: 1px solid var(--hairline-color, #ddd); border-radius: 4px;">
-    <h2 style="margin: 0 0 0.5rem; font-size: 0.95rem;">{% trans "Sales snapshot (paid orders)" %}</h2>
-    <p style="margin: 0; font-size: 0.9rem;">
-        <strong>{% trans "Units sold" %}:</strong> {{ sales_units_paid }}
-        &nbsp;·&nbsp;
-        <strong>{% trans "Gross revenue (৳)" %}:</strong> {{ sales_revenue_paid }}
+<div class="st-order-sales-banner">
+    <h2>{% trans "Sales performance (paid orders, all time)" %}</h2>
+    <p class="st-banner-stats">
+        <strong>৳ {{ sales_revenue_paid|default:0 }}</strong>
+        {% trans "gross revenue" %} ·
+        <strong>{{ sales_units_paid|default:0 }}</strong> {% trans "units" %}
     </p>
-    <p style="margin: 0.5rem 0 0; font-size: 0.8rem; opacity: 0.85;">
-        {% trans "Filter orders by status “Paid” and use date hierarchy for period review. Order lines below list every line item for analytics." %}
+    {% if orders_pending_count %}
+    <p style="margin:0.5rem 0 0;font-size:0.85rem;color:#92400e;">
+        {% trans "Open pipeline:" %} <strong>{{ orders_pending_count }}</strong>
+        {% trans "order(s) not yet paid or completed." %}
+        <a href="?status__exact=pending">{% trans "Show pending only" %}</a>
+    </p>
+    {% endif %}
+    <p style="margin:0.75rem 0 0;font-size:0.8rem;color:#555;">
+        {% trans "Tip: use the date drill-down above the list to review a period. Open an order to see line items, customer address, and payment reference." %}
     </p>
 </div>
 {{ block.super }}

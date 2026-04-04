@@ -1,0 +1,48 @@
+{% load i18n %}
+<section class="st-admin-dashboard" aria-label="{% trans 'Business overview' %}">
+    <header class="st-admin-dashboard__header">
+        <h2>{% trans "Business overview" %}</h2>
+        <p class="st-admin-dashboard__sub">{% trans "Key figures across orders, revenue, and inventory." %}</p>
+    </header>
+
+    <div class="st-admin-dashboard__grid">
+        <article class="st-metric-card">
+            <h3>{% trans "Revenue (paid)" %}</h3>
+            <p class="st-metric-card__value">৳ {{ revenue|default:0 }}</p>
+            <p class="st-metric-card__meta">{{ units_sold }} {% trans "units sold" %}</p>
+            <a href="{{ url_orders }}?status__exact=paid" class="st-metric-card__link">{% trans "View paid orders" %} →</a>
+        </article>
+
+        <article class="st-metric-card">
+            <h3>{% trans "Orders" %}</h3>
+            <p class="st-metric-card__value">{{ orders_total }}</p>
+            <ul class="st-metric-card__list">
+                <li><span>{% trans "Pending" %}</span> <strong>{{ orders_pending }}</strong></li>
+                <li><span>{% trans "Paid" %}</span> <strong>{{ orders_paid }}</strong></li>
+                <li><span>{% trans "Failed" %}</span> <strong>{{ orders_failed }}</strong></li>
+            </ul>
+            <a href="{{ url_orders }}" class="st-metric-card__link">{% trans "All orders" %} →</a>
+        </article>
+
+        <article class="st-metric-card">
+            <h3>{% trans "Inventory" %}</h3>
+            <p class="st-metric-card__value">{{ products_total }} <span class="st-metric-card__suffix">{% trans "SKUs" %}</span></p>
+            <ul class="st-metric-card__list">
+                <li><span>{% trans "In stock" %}</span> <strong>{{ products_in_stock }}</strong></li>
+                <li><span>{% trans "Out of stock" %}</span> <strong class="st-text-warn">{{ products_out }}</strong></li>
+                <li><span>{% trans "Low (≤5)" %}</span> <strong class="st-text-warn">{{ low_stock }}</strong></li>
+            </ul>
+            <a href="{{ url_products }}" class="st-metric-card__link">{% trans "Manage products" %} →</a>
+        </article>
+
+        <article class="st-metric-card st-metric-card--compact">
+            <h3>{% trans "Quick links" %}</h3>
+            <ul class="st-admin-quicklinks">
+                <li><a href="{{ url_order_items }}">{% trans "Line items (sales detail)" %}</a></li>
+                <li><a href="{{ url_carts }}">{% trans "Open carts" %}</a></li>
+                <li><a href="{{ url_products }}?in_stock=no">{% trans "Restock: out of stock" %}</a></li>
+                <li><a href="{{ url_products }}?stock_alert=low">{% trans "Low stock (1–5)" %}</a></li>
+            </ul>
+        </article>
+    </div>
+</section>

@@ -27,7 +27,8 @@ class Order(BaseModel):
     phone = models.CharField(max_length=15)
 
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
-    payment_method = models.CharField(max_length=50, default='SSLCommerz')
+    payment_method = models.CharField(max_length=50, default='bKash')
+    sender_number = models.CharField(max_length=15, null=True, blank=True)
     inventory_committed = models.BooleanField(
         default=False,
         help_text="True when stock has been deducted for this order.",

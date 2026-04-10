@@ -15,13 +15,13 @@ class OrderItemInline(admin.TabularInline):
 
     @admin.display(description="Unit (৳)")
     def unit_price_display(self, obj):
-        if obj.pk:
+        if obj.pk and obj.price is not None:
             return f"৳{obj.price:,}"
         return "—"
 
     @admin.display(description="Line (৳)")
     def line_total_display(self, obj):
-        if obj.pk:
+        if obj.pk and obj.price is not None:
             return f"৳{obj.get_total_price():,}"
         return "—"
 
@@ -182,11 +182,15 @@ class OrderItemAdmin(admin.ModelAdmin):
 
     @admin.display(description="Unit (৳)")
     def unit_price_display(self, obj):
-        return f"৳{obj.price:,}"
+        if obj.price is not None:
+            return f"৳{obj.price:,}"
+        return "—"
 
     @admin.display(description="Line (৳)")
     def line_total_display(self, obj):
-        return f"৳{obj.get_total_price():,}"
+        if obj.price is not None:
+            return f"৳{obj.get_total_price():,}"
+        return "—"
 
     @admin.display(description="Status", ordering="status")
     def status_display(self, obj):

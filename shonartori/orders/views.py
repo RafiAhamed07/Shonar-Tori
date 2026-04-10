@@ -30,6 +30,12 @@ def checkout(request):
     if request.method == "POST":
         address = request.POST.get("address")
         phone = request.POST.get("phone")
+        bkash_number = request.POST.get("bkash_number")
+        transaction_id = request.POST.get("transaction_id")
+
+        if not bkash_number or not transaction_id:
+            messages.error(request, "bKash Sender Number and Transaction ID are required.")
+            return redirect("checkout")
 
         try:
             assert_cart_has_stock(cart)
@@ -40,7 +46,14 @@ def checkout(request):
         try:
             with transaction.atomic():
                 order = Order.objects.create(
-                    user=request.user, total_price=total, address=address, phone=phone
+                    user=request.user, 
+                    total_price=total, 
+                    address=address, 
+                    phone=phone,
+                    sender_number=bkash_number,
+                    transaction_id=transaction_id,
+                    payment_method="bKash",
+                    status="pending"
                 )
                 for item in cart.cart_items.all():
                     OrderItem.objects.create(

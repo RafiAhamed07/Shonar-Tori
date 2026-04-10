@@ -18,11 +18,6 @@ def login_page(request):
             messages.warning(request, 'Account not found.')
             return HttpResponseRedirect(request.path_info)
 
-
-        if not user_obj[0].profile.is_email_verified:
-            messages.warning(request, 'Your account is not verified.')
-            return HttpResponseRedirect(request.path_info)
-
         user_obj = authenticate(username = email , password= password)
         if user_obj:
             login(request , user_obj)
@@ -56,8 +51,15 @@ def register_page(request):
         user_obj.set_password(password)
         user_obj.save()
 
-        messages.success(request, 'An email has been sent on your mail.')
-        return HttpResponseRedirect(request.path_info)
+        # Auto-login — no email verification needed
+        user_obj = authenticate(username=email, password=password)
+        if user_obj:
+            login(request, user_obj)
+            messages.success(request, f'Welcome, {first_name}! Your account has been created.')
+            return redirect('/')
+
+        messages.success(request, 'Account created! Please sign in.')
+        return redirect('login')
 
 
     return render(request , 'register.html')

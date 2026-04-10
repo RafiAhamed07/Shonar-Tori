@@ -12,6 +12,82 @@
   --lux-font-sans: "DM Sans", system-ui, sans-serif;
 }
 
+/* ─── Global: force legible text throughout the dark theme ─── */
+.luxury-body {
+  background-color: var(--lux-bg);
+  color: var(--lux-cream);
+}
+
+/* ALL Bootstrap inputs, selects, textareas on dark background */
+.luxury-body input,
+.luxury-body input.form-control,
+.luxury-body textarea,
+.luxury-body textarea.form-control,
+.luxury-body select,
+.luxury-body select.form-control {
+  background-color: var(--lux-bg) !important;
+  color: var(--lux-cream) !important;
+  border-color: var(--lux-border) !important;
+  border-radius: 0 !important;
+}
+
+.luxury-body input:focus,
+.luxury-body textarea:focus,
+.luxury-body select:focus {
+  background-color: var(--lux-bg) !important;
+  color: var(--lux-cream) !important;
+  border-color: var(--lux-gold) !important;
+  box-shadow: 0 0 0 0.15rem rgba(201, 169, 98, 0.2) !important;
+  outline: none;
+}
+
+/* Table text */
+.luxury-body table,
+.luxury-body table td,
+.luxury-body table th,
+.luxury-body table strong,
+.luxury-body table span {
+  color: var(--lux-cream) !important;
+}
+
+/* Order cards text */
+.luxury-order-card,
+.luxury-order-card .card-header,
+.luxury-order-card .card-body,
+.luxury-order-card strong,
+.luxury-order-card p {
+  color: var(--lux-cream) !important;
+}
+
+/* Global btn-gold (not just inside .luxury-nav) */
+.btn-gold {
+  background: var(--lux-gold);
+  border: none;
+  color: var(--lux-bg) !important;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.btn-gold:hover {
+  background: #dfc98a;
+  color: var(--lux-bg) !important;
+}
+
+/* btn-outline-lux globally */
+.btn-outline-lux {
+  border-color: var(--lux-border);
+  color: var(--lux-cream);
+  background: transparent;
+}
+
+.btn-outline-lux:hover {
+  background: var(--lux-gold);
+  border-color: var(--lux-gold);
+  color: var(--lux-bg);
+}
+
 .luxury-body {
   background-color: var(--lux-bg);
   color: var(--lux-cream);
@@ -468,4 +544,23 @@ button.btn-lux-primary:hover,
 
 .border-lux {
   border-color: var(--lux-border) !important;
+}
+
+/* White placeholders */
+.luxury-body ::placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
+  opacity: 1;
+}
+
+.luxury-body ::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.luxury-body ::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
+  opacity: 1;
+}
+
+.luxury-body :-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
 }

@@ -9,17 +9,36 @@
 
     <div class="luxury-order-card">
       <div class="card-body p-4">
-        <form method="POST" action="{% url 'initiate-payment' %}">
+        <form method="POST" action="{% url 'checkout' %}">
           {% csrf_token %}
+          
+          <div class="alert alert-info border border-lux rounded-0 text-center mb-4">
+            <h6 class="text-uppercase mb-2" style="letter-spacing:0.1em; color:var(--lux-gold);">Pay with bKash</h6>
+            <p class="small mb-2">Please Send Money (exact amount: <strong>৳{{ total }}</strong>) to the following bKash Personal Number:</p>
+            <div class="fs-5 fw-bold mb-0 text-white" style="letter-spacing:0.2em;">017-XXXX-XXXX</div>
+          </div>
+
           <div class="mb-3">
-            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Address</label>
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Delivery Address</label>
             <textarea name="address" class="form-control" rows="3" placeholder="Full address" required></textarea>
           </div>
-          <div class="mb-4">
-            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Phone</label>
+          <div class="mb-3">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Contact Phone</label>
             <input type="text" name="phone" class="form-control" placeholder="Phone number" required>
           </div>
-          <button type="submit" class="btn btn-lux-primary w-100 py-2">Proceed to payment</button>
+
+          <hr class="border-secondary my-4">
+          
+          <div class="mb-3">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">bKash Sender Number</label>
+            <input type="text" name="bkash_number" class="form-control" placeholder="The number you paid from" required>
+          </div>
+          <div class="mb-4">
+            <label class="form-label small text-uppercase text-lux-muted" style="letter-spacing:0.12em;">Transaction ID</label>
+            <input type="text" name="transaction_id" class="form-control" placeholder="e.g. TRX12345678" required>
+          </div>
+
+          <button type="submit" class="btn btn-lux-primary w-100 py-2">Confirm Payment</button>
         </form>
       </div>
     </div>
